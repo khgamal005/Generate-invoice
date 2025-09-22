@@ -1,0 +1,40 @@
+import { MongoDBAdapter } from "@auth/mongodb-adapter"
+import NextAuth, { DefaultSession } from "next-auth"
+import client from "./mongodb-client"
+import Nodemailer from "next-auth/providers/nodemailer"
+
+// 🔹 Extend session types
+declare module "next-auth" {
+  interface Session {
+    user: {
+      firstName: string
+      lastName: string
+      currency: string
+    } & DefaultSession["user"]
+  }
+}
+
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  adapter: MongoDBAdapter(client),
+
+  providers: [
+    Email({
+      server: {
+        host: "smtp.gmail.com",
+        port: 587, // use 465 if you want `secure: true`
+        secure: false,
+        auth: {
+      user: "khgamal005@gmail.com",
+      pass:"tmjy gxcf ecep yjql",
+        },
+      },
+      from: process.env.EMAIL_FROM || "Acme <khgamal005@gmail.com>",
+    }),
+  ],
+
+  pages: {
+    error: "/login",
+    verifyRequest: "/verify-email",
+    signIn: "/login",
+  },
+})
