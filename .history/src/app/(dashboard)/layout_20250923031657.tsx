@@ -1,7 +1,6 @@
 import { ProtectedPage } from "@/components/CheckAuth";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardSidebar from "./_component/DashboardSidebar";
-import UserProfileDropDown from "./_component/UserProfileDropdown";
 
 export default function DashboardLayout({
   children,
@@ -11,7 +10,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
             <DashboardSidebar>
-                <UserProfileDropDown
+                <UserProfileDropDow
                     isFullName
                     isArrowUp
                 />
