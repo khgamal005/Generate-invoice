@@ -12,11 +12,17 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <DashboardSidebar>
-        <UserProfileDropDown isFullName isArrowUp />
-      </DashboardSidebar>
+            <DashboardSidebar>
+                <UserProfileDropDown
+                    isFullName
+                    isArrowUp
+                />
+            </DashboardSidebar>
       <main className="w-full relative">
-        <DashboardHeader />
+                        <DashboardHeader/>
+                <Suspense fallback={<p>Loading...</p>}>
+                    {children}
+                </Suspense>
         {children}
         <ProtectedPage />
       </main>

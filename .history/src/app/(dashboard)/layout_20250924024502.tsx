@@ -3,7 +3,6 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardSidebar from "./_component/DashboardSidebar";
 import UserProfileDropDown from "./_component/UserProfileDropdown";
 import { Suspense } from "react";
-import DashboardHeader from "./_component/DashboardHeader";
 
 export default function DashboardLayout({
   children,
@@ -12,11 +11,17 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <DashboardSidebar>
-        <UserProfileDropDown isFullName isArrowUp />
-      </DashboardSidebar>
+            <DashboardSidebar>
+                <UserProfileDropDown
+                    isFullName
+                    isArrowUp
+                />
+            </DashboardSidebar>
       <main className="w-full relative">
-        <DashboardHeader />
+                        <DashboardHeader/>
+                <Suspense fallback={<p>Loading...</p>}>
+                    {children}
+                </Suspense>
         {children}
         <ProtectedPage />
       </main>

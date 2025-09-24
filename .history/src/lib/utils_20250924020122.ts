@@ -10,7 +10,7 @@ export const currencyOption = {
   USD: '$',
   EUR: '€',
   GBP: '£',
-  JPY: '¥',
+  JPY: '¥'
   EG: 'EGP'
 };
 

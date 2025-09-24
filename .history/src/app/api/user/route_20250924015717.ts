@@ -31,7 +31,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({
       message: "User udated successfully",
-      data : userDetails 
+      data : userDetails optional
     });
   } catch (error: any) {
     return NextResponse.json(

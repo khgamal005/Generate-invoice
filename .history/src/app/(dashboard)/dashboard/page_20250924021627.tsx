@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import {  signOut } from "@/lib/auth";
+import { auth, signOut } from "@/lib/auth";
 import React from 'react'
 
 const DashboardPage = () => {

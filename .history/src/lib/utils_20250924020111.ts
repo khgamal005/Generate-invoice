@@ -10,8 +10,8 @@ export const currencyOption = {
   USD: '$',
   EUR: '€',
   GBP: '£',
-  JPY: '¥',
-  EG: 'EGP'
+  JPY: '¥'
+  : '¥'
 };
 
  export type TCurrencyKey = keyof typeof currencyOption;

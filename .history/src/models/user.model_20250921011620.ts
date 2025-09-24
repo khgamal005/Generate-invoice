@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema<IUser>({
      lastName : { type : String, default : null },
      email : { type : String, required : true, unique : true },
      emailVerified : { type : Date, default : null },
-     currency : { type : String, default : "EGP" }
+     currency : { type : String, default : "USD" }
 },{
     timestamps : true
 })
