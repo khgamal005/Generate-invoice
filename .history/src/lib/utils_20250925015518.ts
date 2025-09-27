@@ -11,7 +11,7 @@ export const currencyOption = {
   EUR: '€',
   GBP: '£',
   JPY: '¥',
-  EGP: "£E", // Egyptian Pound
+  EGP: 'EGP'
 };
 
  export type TCurrencyKey = keyof typeof currencyOption;
