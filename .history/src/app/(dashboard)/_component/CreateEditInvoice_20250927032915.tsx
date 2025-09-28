@@ -94,7 +94,7 @@ export default function CreateEditInvoice({
     if (invoiceId) {
       fetchData();
     }
-  }, [invoiceId]);
+  }, [fetchData, invoiceId]);
 
   //items
   const { fields, append, remove } = useFieldArray({

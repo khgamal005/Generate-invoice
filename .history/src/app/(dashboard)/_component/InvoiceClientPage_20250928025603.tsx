@@ -144,7 +144,7 @@ export default function InvoiceClientPage({userId, currency }: IInvoiceClientPag
               <MoreVerticalIcon className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={()=> window.open(`/api/invoice/${userId}/${invoiceId}`, "_blank")}>View</DropdownMenuItem>
+              <DropdownMenuItem onClick={ window.open(`/api/invoice/${userId}/${invoiceId}`, "_blank")}>View</DropdownMenuItem>
               <DropdownMenuItem onClick={()=>router.push(`/invoice/edit/${invoiceId}`)}>Edit</DropdownMenuItem>
               <DropdownMenuItem onClick={()=>router.push(`/invoice/paid/${invoiceId}`)}>Paid</DropdownMenuItem>
               <DropdownMenuItem onClick={()=>handleSendEmail(invoiceId as string,`Invoice from ${row.original.from.name}`)}>Send Email</DropdownMenuItem>
