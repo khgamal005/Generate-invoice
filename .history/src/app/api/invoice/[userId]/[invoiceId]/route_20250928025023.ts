@@ -168,10 +168,10 @@ export async function GET(
             "content-disposition" : "inline"
         }
     })
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.log(error);
     return NextResponse.json({
-      message: error instanceof Error ? error.message : "Something went wrong",
+      message: error || error.message || "Something went wrong",
     });
   }
 }

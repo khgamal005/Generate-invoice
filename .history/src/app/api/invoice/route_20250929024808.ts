@@ -59,7 +59,6 @@ export async function POST(request : NextRequest){
             data : data
         })
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error : any) {
         return NextResponse.json({
             message : error || error?.message || "Something went wrong"
@@ -114,7 +113,6 @@ export async function GET(request : NextRequest){
             totalPage,
             page,
         })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error : any) {
         return NextResponse.json({
             message : error || error.message || "Something went wrong"
@@ -170,7 +168,6 @@ export async function PUT(request : NextRequest){
 
         await connectDB()
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const updateInvoice = await InvoiceModel.findByIdAndUpdate(invoiceId,payload)
 
 
@@ -178,7 +175,6 @@ export async function PUT(request : NextRequest){
             message : "Invoice updated successfully"
         })
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error : any) {
         return NextResponse.json({
             message : error || error.message || "Something went wrong"

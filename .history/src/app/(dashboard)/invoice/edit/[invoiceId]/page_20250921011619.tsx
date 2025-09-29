@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 export default function EditInvoicePage(){
     const { invoiceId } = useParams()
 
+    console.log("invoiceId",invoiceId)
     return(
         <div className="p-4">
       <div className="flex items-center  gap-4">

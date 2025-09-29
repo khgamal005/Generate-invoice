@@ -8,7 +8,7 @@ export async function sendEmail(to: string, subject: string, html: any) {
       port: 465,
       secure: true, // SSL
       auth: {
-        user: process.env.EMAIL_USER,
+        user: process.env.EMAIL_USER, // your Gmail
         pass: process.env.EMAIL_PASS, 
       },
     });

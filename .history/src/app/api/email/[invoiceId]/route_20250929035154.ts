@@ -29,7 +29,7 @@ export async function POST(
     const invoiceData: IInvoice | null = await InvoiceModel.findById(invoiceId);
     if (!invoiceData) return NextResponse.json({ message: "No invoice found" }, { status: 404 });
 
-    const invoiceURL = `${process.env.NEXTAUTH_URL}/api/invoice/${session.user.id}/${invoiceId}`;
+    const invoiceURL = `${process.env.NEXTAUTH_UR}/api/invoice/${session.user.id}/${invoiceId}`;
 
     // **Render InvoiceTemplate to string using JSX directly**
     const htmlString = `

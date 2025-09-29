@@ -19,8 +19,6 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-  import { useCallback } from "react";
-
 
 interface ICreateEditInvoice {
   firstName?: string | undefined;
@@ -71,8 +69,7 @@ export default function CreateEditInvoice({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
-
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     try {
       setIsLoading(true);
       const response = await fetch(`/api/invoice?invoiceId=${invoiceId}`);
@@ -86,12 +83,11 @@ export default function CreateEditInvoice({
           due_date: new Date(invoiceData.due_date),
         });
       }
-    } catch {
-      // error handling can be added here if needed
+    } catch (error) {
     } finally {
       setIsLoading(false);
     }
-  }, [invoiceId, reset]);
+  };
 
   //edit component
   useEffect(() => {
