@@ -7,34 +7,30 @@ import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
   invoiceId: string;
+  userId: string;
 }
 
 export const runtime = "nodejs";
 
 export async function POST(
   request: NextRequest,
-  context: { params: Promise<Params> }
+  { params }: { params: Params }
 ) {
   try {
     const session = await auth();
-    if (!session) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
+    if (!session) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-    // ✅ Await params
-    const { invoiceId } = await context.params;
+    const { invoiceId } = params;
     const { subject } = await request.json();
 
     await connectDB();
 
     const invoiceData: IInvoice | null = await InvoiceModel.findById(invoiceId);
-    if (!invoiceData) {
-      return NextResponse.json({ message: "No invoice found" }, { status: 404 });
-    }
+    if (!invoiceData) return NextResponse.json({ message: "No invoice found" }, { status: 404 });
 
-    // ✅ Only invoiceId available, no userId
     const invoiceURL = `${process.env.NEXTAUTH_URL}/api/invoice/${session.user.id}/${invoiceId}`;
 
+    // **Render InvoiceTemplate to string using JSX directly**
     const htmlString = `
       <div>
         <h1>Hello ${session.user.firstName}</h1>
@@ -45,21 +41,11 @@ export async function POST(
       </div>
     `;
 
-    const emailResponse = await sendEmail(
-      invoiceData.to.email,
-      subject,
-      htmlString
-    );
+    const emailResponse = await sendEmail(invoiceData.to.email, subject, htmlString);
 
-    return NextResponse.json({
-      message: "Email sent successfully",
-      data: emailResponse,
-    });
+    return NextResponse.json({ message: "Email sent successfully", data: emailResponse });
   } catch (err: unknown) {
     console.error(err);
-    return NextResponse.json(
-      { message: err instanceof Error ? err.message : "Something went wrong" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: err instanceof Error ? err.message : "Something went wrong" }, { status: 500 });
   }
 }

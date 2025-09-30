@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
   invoiceId: string;
+  userId: string;
 }
 
 export const runtime = "nodejs";
@@ -21,8 +22,9 @@ export async function POST(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // ✅ Await params
-    const { invoiceId } = await context.params;
+    // ✅ Await async params (Next.js 15 requirement)
+    const { invoiceId, userId } = await context.params;
+
     const { subject } = await request.json();
 
     await connectDB();
@@ -32,9 +34,9 @@ export async function POST(
       return NextResponse.json({ message: "No invoice found" }, { status: 404 });
     }
 
-    // ✅ Only invoiceId available, no userId
-    const invoiceURL = `${process.env.NEXTAUTH_URL}/api/invoice/${session.user.id}/${invoiceId}`;
+    const invoiceURL = `${process.env.NEXTAUTH_URL}/api/invoice/${userId}/${invoiceId}`;
 
+    // ✅ Direct HTML string for email (safe for API routes)
     const htmlString = `
       <div>
         <h1>Hello ${session.user.firstName}</h1>
