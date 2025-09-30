@@ -19,7 +19,8 @@ import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+  import { useCallback } from "react";
+
 
 interface ICreateEditInvoice {
   firstName?: string | undefined;
@@ -70,6 +71,7 @@ export default function CreateEditInvoice({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
+
   const fetchData = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -105,28 +107,29 @@ export default function CreateEditInvoice({
   });
 
   //total of items
-  const items = useWatch({ control, name: "items" }) || [];
+const items = useWatch({ control, name: "items" });
 
-  useEffect(() => {
-    if (!items.length) return;
+const items = useWatch({ control, name: "items" }) || [];
 
-    // calculate totals without resetting items[]
-    let sub_total = 0;
+useEffect(() => {
+  if (!items || !items.length) return;
 
-    items.forEach((item, index) => {
-      const quantity = Number(item?.quantity) || 0;
-      const price = Number(item?.price) || 0;
-      const total = quantity * price;
-      sub_total += total;
+  // Recalculate totals
+  const updatedItems = items.map((item) => {
+    const quantity = Number(item?.quantity) || 0;
+    const price = Number(item?.price) || 0;
+    const total = quantity * price;
+    return { ...item, total };
+  });
 
-      // update only this field if changed
-      if (item.total !== total) {
-        setValue(`items.${index}.total`, total, { shouldValidate: true });
-      }
-    });
+  // Grand subtotal
+  const sub_total = updatedItems.reduce((sum, i) => sum + (i.total || 0), 0);
 
-    setValue("sub_total", sub_total, { shouldValidate: true });
-  }, [items, setValue]);
+  // Update form values in one go
+  setValue("items", updatedItems, { shouldValidate: true });
+  setValue("sub_total", sub_total, { shouldValidate: true });
+}, [items, setValue, control]);
+
 
   //add new item row
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -180,7 +183,7 @@ export default function CreateEditInvoice({
 
       if (response.status === 200) {
         toast.success("Invoice updated Successfully");
-        router.push("/invoice");
+        router.push("/invoice")
       } else {
         toast.error("Something went wrong");
       }
@@ -464,7 +467,7 @@ export default function CreateEditInvoice({
 
       {/**item details */}
       <div className="grid gap-2">
-        <div className="grid grid-cols-4 sm:grid-cols-6 bg-neutral-50 py-1 px-3 gap-2 text-sm font-medium">
+  <div className="grid grid-cols-4 sm:grid-cols-6 bg-neutral-50 py-1 px-3 gap-2 text-sm font-medium">
           <div className="col-span-2">Item</div>
           <div className="pr-6">Quantity</div>
           <div>Price</div>
@@ -478,6 +481,7 @@ export default function CreateEditInvoice({
                 <Input
                   placeholder="Enter item name"
                   type="text"
+
                   {...register(`items.${index}.item_name`, { required: true })}
                   disabled={isLoading}
                 />
@@ -519,7 +523,7 @@ export default function CreateEditInvoice({
                   </p>
                 )}
               </div>
-              <div className="col-span-2 flex items-center gap-2">
+              <div className="relative ">
                 <Input
                   placeholder="Enter total"
                   {...register(`items.${index}.total`, {
@@ -535,7 +539,7 @@ export default function CreateEditInvoice({
                   </p>
                 )}
                 {index !== 0 && (
-                  <div className="bg-red-50 text-red-500 shrink-0">
+                  <div className="absolute top-0 right-0">
                     <Button
                       type="button"
                       variant={"ghost"}
@@ -645,11 +649,7 @@ export default function CreateEditInvoice({
       </div>
 
       <Button size={"lg"}>
-        {isLoading
-          ? "Please wait..."
-          : invoiceId
-            ? "Update Invoice"
-            : "Create Invoice"}
+        {isLoading ? "Please wait..." : invoiceId ? "Update Invoice" : "Create Invoice"}
       </Button>
     </form>
   );

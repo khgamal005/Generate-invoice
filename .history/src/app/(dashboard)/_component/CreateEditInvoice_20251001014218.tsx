@@ -519,7 +519,7 @@ export default function CreateEditInvoice({
                   </p>
                 )}
               </div>
-              <div className="col-span-2 flex items-center gap-2">
+              <div className="col-span- flex items-center gap-2">
                 <Input
                   placeholder="Enter total"
                   {...register(`items.${index}.total`, {

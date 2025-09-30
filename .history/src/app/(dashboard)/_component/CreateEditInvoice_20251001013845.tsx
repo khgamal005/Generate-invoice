@@ -519,7 +519,7 @@ export default function CreateEditInvoice({
                   </p>
                 )}
               </div>
-              <div className="col-span-2 flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Input
                   placeholder="Enter total"
                   {...register(`items.${index}.total`, {
@@ -535,7 +535,8 @@ export default function CreateEditInvoice({
                   </p>
                 )}
                 {index !== 0 && (
-                  <div className="bg-red-50 text-red-500 shrink-0">
+                  <div 
+                  className="bg-red-50 text-red-500 shrink-0">
                     <Button
                       type="button"
                       variant={"ghost"}
