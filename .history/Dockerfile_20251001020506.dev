@@ -1,0 +1,16 @@
+# Development image for Next.js
+FROM node:20-alpine
+
+WORKDIR /usr/src/app
+
+# Install ALL dependencies (including dev)
+COPY package*.json ./
+RUN npm install
+
+# Copy all files
+COPY . .
+
+EXPOSE 3000
+
+# Run Next.js dev server with hot reload
+CMD ["npm", "run", "dev"]

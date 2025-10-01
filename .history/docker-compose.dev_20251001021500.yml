@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: next-app-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+        env_file
+      - .env.local   # 👈 tells Compose to use your .env.local
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: ${MONGODB_URI}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: http://localhost:3000
+      AUTH_RESEND_KEY: ${AUTH_RESEND_KEY}
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASS: ${EMAIL_PASS}
+      EMAIL_FROM: ${EMAIL_FROM}
+    command: npm run dev

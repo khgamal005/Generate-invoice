@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: next-app-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: ${MONGODB_URI}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: https://your-vercel-domain.vercel.app
+      AUTH_RESEND_KEY: ${AUTH_RESEND_KEY}
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASS: ${EMAIL_PASS}
+      EMAIL_FROM: ${EMAIL_FROM}
+    restart: unless-stopped
+    command: npm start

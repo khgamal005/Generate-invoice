@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: next-app-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file: 
+      - .env.local   # 👈 ensures all env vars come from here
+    environment:
+      NODE_ENV: production
+      NEXTAUTH_URL: https://generate-invoice-5wof.vercel.app/
+    restart: unless-stopped
+    command: npm start

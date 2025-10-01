@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  next-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextjs-prod
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: ${MONGODB_URI}

@@ -1,0 +1,22 @@
+# Production image for Next.js
+FROM node:20
+
+WORKDIR /usr/src/app
+
+# Copy only package files first
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --production
+
+# Copy the rest of the code
+COPY . .
+
+# Build Next.js app
+RUN npm run build
+
+# Expose Next.js default port
+EXPOSE 3000
+
+# Run Next.js production server
+CMD ["npm", "start"]
